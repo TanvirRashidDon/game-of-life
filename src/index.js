@@ -20,7 +20,7 @@ class Box extends React.Component {
 
 class Grid extends React.Component {
 	render() {
-		const width = (this.props.cols * 14);
+		const width = (this.props.cols * 16);
 		var rowsArr = [];
 
 		var boxClass = "";
@@ -65,20 +65,32 @@ class Main extends React.Component {
 		}
 	}
 
+	selectBox = (row, col) => {
+		let gridCopy = arrayClone(this.state.gridFull);
+		gridCopy[row][col] = !gridCopy[row][col];
+		this.setState(
+			{gridFull: gridCopy}
+		)
+	}
+
   render(){
-	return (
-	  <div>
-		<h1>The Game of Life</h1>
+    return (
+      <div>
+        <h1>The Game of Life</h1>
         <Grid
-					gridFull={this.state.gridFull}
-					rows={this.rows}
-					cols={this.cols}
-					selectBox={this.selectBox}
-				/>
-				<h2>Generation: {this.state.generation}</h2>
-	  </div>
-	)
+          gridFull={this.state.gridFull}
+          rows={this.rows}
+          cols={this.cols}
+          selectBox={this.selectBox}
+        />
+        <h2>Generation: {this.state.generation}</h2>
+      </div>
+    )
   }
+}
+
+function arrayClone(arr){
+	return JSON.parse(JSON.stringify(arr))
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));
